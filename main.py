@@ -13,9 +13,17 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, value):
+        super().__init__(value)
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, value):
+        return self.__value
         if len(value) != 10 or not value.isdigit():
             raise ValueError("Phone number must be 10 digits")
-        super().__init__(value)
 
 class Birthday(Field):
     def __init__(self, value):
@@ -29,7 +37,7 @@ class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
-        self.birthday = None
+
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
@@ -42,6 +50,7 @@ class Record:
         self.add_phone(new_phone)
 
     def add_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
         if self.birthday is None:
             self.birthday = Birthday(birthday)
         else:
@@ -107,6 +116,7 @@ def birthdays(args, book):
     else:
         return "No upcoming birthdays"
 
+# Decorator for input error handling
 def input_error(func):
     def inner(*args, **kwargs):
         try:
@@ -115,6 +125,35 @@ def input_error(func):
             return str(e)
     return inner
 
+@input_error
+def add_contact(args, book: AddressBook):
+    name, phone, *_ = args
+    record = book.find(name)
+    message = "Contact updated."
+    if record is None:
+        record = Record(name)
+        book.add_record(record)
+        message = "Contact added."
+    if phone:
+        record.add_phone(phone)
+    return message
+
+@input_error
+def change_contact(args, book: AddressBook):
+    pass
+
+@input_error
+def show_phone(args, book: AddressBook):
+    pass
+
+@input_error
+def show_all(book: AddressBook):
+    pass
+
+def parse_input(user_input):
+    pass
+
+# Main function
 def main():
     book = AddressBook()
     print("Welcome to the assistant bot!")
@@ -153,8 +192,13 @@ def main():
         else:
             print("Invalid command.")
 
+# Sample input parser function (not provided in this snippet)
 def parse_input(user_input):
-    pass
+    tokens = user_input.split()
+    command = tokens[0]
+    args = tokens[1:]
+    return command, args
+
 
 if __name__ == "__main__":
     main()
