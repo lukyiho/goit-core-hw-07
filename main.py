@@ -81,7 +81,6 @@ class AddressBook(UserDict):
                 upcoming_birthdays.append(record)
         return upcoming_birthdays
 
-# Handler functions for new commands
 def add_birthday(args, book):
     name, birthday = args
     record = book.find(name)
@@ -108,7 +107,6 @@ def birthdays(args, book):
     else:
         return "No upcoming birthdays"
 
-# Decorator for input error handling
 def input_error(func):
     def inner(*args, **kwargs):
         try:
@@ -117,7 +115,6 @@ def input_error(func):
             return str(e)
     return inner
 
-# Main function
 def main():
     book = AddressBook()
     print("Welcome to the assistant bot!")
@@ -156,9 +153,7 @@ def main():
         else:
             print("Invalid command.")
 
-# Sample input parser function (not provided in this snippet)
 def parse_input(user_input):
-    # Implementation of parse_input function
     pass
 
 if __name__ == "__main__":
