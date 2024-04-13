@@ -88,7 +88,7 @@ class AddressBook(UserDict):
                 upcoming_birthdays.append(record)
         return upcoming_birthdays
 
-# Decorator for input error handling
+
 def input_error(func):
     def inner(*args, **kwargs):
         try:
