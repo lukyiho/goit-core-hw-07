@@ -233,7 +233,7 @@ def main():
 
         if command in ["close", "exit"]:
             print("Good bye!")
-            save_data(book)  # Call save_data function to serialize and save data
+            save_data(book)
             break
 
         elif command == "hello":
